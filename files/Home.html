@@ -1,0 +1,127 @@
+<html>
+<head>
+    <title> FIS A1 </title>
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <link href="General_S.css" rel="stylesheet" type="text/css" />
+</head>
+<link rel="icon" href="favicon-96x96.png">
+<script>
+  $(function () {
+        setInterval("disp()", 1000);
+     })
+    function disp() {
+        var data_payload = {};
+        /*****************************************************/
+        /*AJAX get request to the server                     */
+        /*****************************************************/
+        $.ajax({
+            type: 'GET',
+            data: JSON.stringify(data_payload),
+            contentType: 'application/json',
+            url: 'http://192.168.100.107:4444/frontend',
+            success: function (data) {
+            /*****************************************************/
+            /*recieve JSON payload fron server and update HTML parts*/
+            /*****************************************************/
+                document.getElementById('TimeC').innerHTML = data.time;
+                document.getElementById('EventN').innerHTML = data.eventCounts;
+                document.getElementById('OutputS').innerHTML = data.activityStatus;
+                document.getElementById("led0").style.fill = data.outputs.op0;
+                document.getElementById("led1").style.fill = data.outputs.op1;
+                document.getElementById("led2").style.fill = data.outputs.op2;
+                document.getElementById("led3").style.fill = data.outputs.op3;
+                document.getElementById("led4").style.fill = data.outputs.op4;
+                document.getElementById("led5").style.fill = data.outputs.op5;
+                document.getElementById("led6").style.fill = data.outputs.op6;
+                document.getElementById("led7").style.fill = data.outputs.op7;
+            }
+        });
+    }
+</script>
+<body>
+
+<header>
+    <h1><b> ASE-9476 Factory Information Systems </b></h1>
+    <h2><em> Assignment 1 </em></h2>
+    <h3> Tampere University of Technology </h3>
+</header> <br>
+<h1> Tank Controller OPC-UA </h1>
+
+<div class="GeneralDiv">
+    <div class="Horiz_Div">
+        <p> Event count </p>
+        <div id="EventN">
+            0
+        </div>
+    </div>
+    <div class="Horiz_Div">
+        <p> Diagnostics </p>
+        <div id="OutputS">
+            Ok
+        </div>
+    </div>
+    <div class="Horiz_Div">
+        <p> Time </p>
+        <div id="TimeC">
+            00:00:00 00/00/0000
+        </div>
+    </div>
+</div><br><br><br>
+<h2> Digital Outputs Status </h2><br><br>
+<div class="GeneralDiv">
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led7"></circle>
+        </svg><br>
+        <a>Q07</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led6"></circle>
+        </svg><br>
+        <a>Q06</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led5"></circle>
+        </svg><br>
+        <a>Q05</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led4"></circle>
+        </svg><br>
+        <a>Q04</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led3"></circle>
+        </svg><br>
+        <a>Q03</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led2"></circle>
+        </svg><br>
+        <a>Q02</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led1"></circle>
+        </svg><br>
+        <a>Q01</a>
+    </div>
+    <div class="Horiz_Div">
+        <svg height="100" width="100">
+            <circle cx="50" cy="50" r="40" id="led0"></circle>
+        </svg><br>
+        <a>Q00</a>
+    </div>
+</div>
+<br><br><br><br>
+<footer>
+    Site developed by: Group 6 <br>
+    2018
+</footer>
+</body>
+</html>
