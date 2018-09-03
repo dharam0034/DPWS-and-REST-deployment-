@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions name="ConveyorService" 
+	targetNamespace="http://www.tut.fi/fast/Assignment"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.tut.fi/fast/Assignment"
+	xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:sawsdl="http://www.w3.org/ns/sawsdl" 
+	xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+
+	<types>
+		<xsd:schema targetNamespace="http://www.tut.fi/fast/Assignment" elementFormDefault="qualified">
+			
+			<xsd:element name="Outputs">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="output0" type="xsd:string" />
+						<xsd:element name="output1" type="xsd:string" />
+						<xsd:element name="output2" type="xsd:string" />
+						<xsd:element name="output3" type="xsd:string" />
+						<xsd:element name="output4" type="xsd:string" />
+						<xsd:element name="output5" type="xsd:string" />
+						<xsd:element name="output6" type="xsd:string" />
+						<xsd:element name="output7" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="NotificationMessage">
+				<xsd:complexType>
+					<xsd:attribute name="id" type="xsd:string" />
+					<xsd:attribute name="type" type="xsd:string" />
+					<xsd:sequence>
+						<xsd:element name="payload" type="tns:payloadType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>	
+						
+			<xsd:element name="payloadType">	
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="timeStamp" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>		
+			
+		</xsd:schema>
+	</types>
+	
+	<message name="NotificationMessage">
+		<part name="MessagePart" element="tns:NotificationMessage"/>
+	</message>
+	
+	<message name="OutputsStatus">
+		<part name="MessagePart" element="tns:Outputs"/>
+	</message>
+	
+	<portType name="servicePort" wse:EventSource="true">
+
+		<operation name="UpdateOutputsWS">
+			<input message="tns:OutputsStatus" />
+		</operation>
+
+		<operation name="PublishEventsWS">
+		</operation>
+		
+		<operation name="timeWS">
+			<output message="NotificationMessage" />
+		</operation>
+
+	</portType>
+
+	<binding name="servicePort" type="tns:servicePort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+
+		<operation name="UpdateOutputsWS">
+			<soap:operation style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</operation>
+		
+		<operation name="PublishEventsWS">
+			<soap:operation style="document" />
+		</operation>
+		
+		<operation name="timeWS">
+			<soap:operation style="document" />
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</operation>
+		
+	</binding>
+	
+	<service name="Assignment">
+		<port name="servicePort" binding="tns:servicePort">
+			<soap:address location="http://192.168.100.100:80/dpws/ws01" />
+		</port>
+	</service>
+</definitions>
