@@ -5,5 +5,5 @@ For RESTful POST req. ----->
 For SOAP POST req. ----->
 2) node mainREST.js 
 
-4)Browse http://192.168.100.107:4444 
+3)Browse http://192.168.100.107:4444 
 
